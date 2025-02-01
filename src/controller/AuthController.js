@@ -1,4 +1,5 @@
 const UsersModel = require('../models/UserModel');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
@@ -19,28 +20,25 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email, password_hash } = req.body;
-
+    const { email, password } = req.body;
     try {
-        const [user] = await UsersModel.findUserByEmail({ email });
-        console.log(user);
+        const user = await UsersModel.findUserByEmail( {email} );
         if (user.length === 0) {
             res.status(404).json({
+                status: 'failed',
                 message: 'Login Failed'
             });
             return;
         }
 
-        const isPasswordValid = bcrypt.compareSync(password_hash, user[0].password_hash);
+        const isPasswordValid = bcrypt.compareSync(password, user[0].password);
 
         if (!isPasswordValid) {
             return res.status(401).json({
+                status: 'failed',
                 message: 'Login Failed'
             });
         }
-
-        const last_login = new Date();
-        await UsersModel.lastLogin({ last_login}, user[0].user_id );
 
         const payload = {
             data: user[0]
@@ -53,15 +51,15 @@ const login = async (req, res) => {
         const token = jwt.sign(payload, secret, expiresIn);
 
         res.status(200).json({
+            status: 'success',
             message: 'Login Success',
-            data : {
-                user
-            },
+            data : user,
             token
         });
 
     } catch (error) {
         res.status(500).json({
+            status: 'failed',
             message: "Server Error",
             serverMessage: error.message
         });

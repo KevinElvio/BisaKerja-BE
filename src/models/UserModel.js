@@ -11,6 +11,15 @@ async function createUser(data) {
     });
 }
 
+async function findUserByEmail(data) {
+    return await prisma.user.findMany({
+        where: {
+            email: data.email
+        }
+    });
+}
+
 module.exports = {
-    createUser
+    createUser,
+    findUserByEmail
 }
