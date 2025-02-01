@@ -9,15 +9,11 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  username  String  @unique
-  email     String  @unique
-  password  String
-  image     String?
-  role      String  @default("user")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]
+  email     String   @unique
+  name      String?
   comments  Comment[]
+  posts     Post[]
+  jobs      Job[]
 }
 
 model Post {
@@ -45,3 +41,15 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
+model Job {
+  id          Int      @id @default(autoincrement())
+  title       String
+  company     String
+  location    String
+  description String
+  type        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
