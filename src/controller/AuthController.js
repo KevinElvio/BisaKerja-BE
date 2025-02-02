@@ -11,9 +11,9 @@ const register = async (req, res) => {
             data: user
         })
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status: 'failed',
-            message: "Server Error",
+            message: "Bad Request",
             serverMessage: error.message
         });
     }
@@ -26,7 +26,7 @@ const login = async (req, res) => {
         if (user.length === 0) {
             res.status(404).json({
                 status: 'failed',
-                message: 'Login Failed'
+                message: 'Credentials not found'
             });
             return;
         }
@@ -36,7 +36,7 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({
                 status: 'failed',
-                message: 'Login Failed'
+                message: 'Unauthorized'
             });
         }
 
@@ -52,15 +52,15 @@ const login = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            message: 'Login Success',
+            message: 'Login successfully',
             data : user,
-            token
+            token: `Bearer | ${token}`
         });
 
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status: 'failed',
-            message: "Server Error",
+            message: "Bad request",
             serverMessage: error.message
         });
     }

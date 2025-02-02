@@ -19,7 +19,21 @@ async function findUserByEmail(data) {
     });
 }
 
+async function getAllUsers() {
+    return await prisma.user.findMany();
+}
+
+async function getUserById(id){
+    return await prisma.user.findUnique({
+        where: {
+            id: parseInt(id)
+        }
+    });
+}
+
 module.exports = {
     createUser,
-    findUserByEmail
+    findUserByEmail,
+    getAllUsers,
+    getUserById
 }
