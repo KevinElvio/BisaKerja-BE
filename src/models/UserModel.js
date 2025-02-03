@@ -31,9 +31,19 @@ async function getUserById(id){
     });
 }
 
+async function updateUser(id, data){
+    return await prisma.user.update({
+        where: {
+            id: parseInt(id)
+        },
+        data
+    });
+}
+
 module.exports = {
     createUser,
     findUserByEmail,
     getAllUsers,
-    getUserById
+    getUserById,
+    updateUser
 }
