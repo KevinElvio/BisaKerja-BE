@@ -102,9 +102,37 @@ const updateUser = async (req, res) => {
     }
 }
 
+const deleteUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await UsersModel.getUserById(id);
+        if (user === null) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'User not found',
+            })
+        }
+        else {
+            await UsersModel.deleteUser(id);
+            res.status(200).json({
+                status: 'success',
+                message: 'User deleted successfully',
+            })
+        }
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: "Bad request",
+            serverMessage: error.message
+        })
+    }
+}
+
+
 
 module.exports = {
     getAllUsers,
     getUserById,
-    updateUser
+    updateUser,
+    deleteUser
 }
