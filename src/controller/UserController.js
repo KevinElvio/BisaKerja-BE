@@ -27,13 +27,13 @@ const getUserById = async (req, res) => {
     const { id } = req.params;
     try {
         const user = await UsersModel.getUserById(id)
-        if(user === null){
+        if (user === null) {
             res.status(404).json({
                 status: 'failed',
                 message: 'User not found',
-            }) 
+            })
         }
-        else{
+        else {
             res.status(200).json({
                 status: 'success',
                 message: 'User retrieved successfully',
@@ -52,6 +52,7 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
+    const { username, email, password, image } = data;
     try {
         const user = await UsersModel.getUserById(id);
         if (user === null) {
@@ -59,9 +60,33 @@ const updateUser = async (req, res) => {
                 status: 'failed',
                 message: 'User not found',
             })
-        } else {
+        }
+        else if (username === user.username) {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Username already exists'
+            })
+        }
+        else if (email === user.email) {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Email already exists'
+            })
+        }
+        else if (password === user.name) {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Password already exists'
+            })
+        }
+        else if (image === user.image) {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Image already exists'
+            })
+        }
+        else {
             const updatedUser = await UsersModel.updateUser(id, data);
-            if (data.name === user.name)
             res.status(200).json({
                 status: 'success',
                 message: 'User updated successfully',
