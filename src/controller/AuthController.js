@@ -22,7 +22,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await UsersModel.findUserByEmail( {email} );
+        const user = await UsersModel.findUserByEmail({ email });
         if (user.length === 0) {
             res.status(404).json({
                 status: 'failed',
@@ -31,7 +31,7 @@ const login = async (req, res) => {
             return;
         }
 
-        const isPasswordValid = bcrypt.compareSync(password, user[0].password);
+        const isPasswordValid = bcrypt.compare(password, user[0].password);
 
         if (!isPasswordValid) {
             return res.status(401).json({
@@ -41,7 +41,10 @@ const login = async (req, res) => {
         }
 
         const payload = {
-            data: user[0]
+            data: {
+                id : user[0].id, 
+                email: user[0].email
+            }
         };
 
         const secret = process.env.JWT_SECRET;
@@ -53,12 +56,12 @@ const login = async (req, res) => {
         res.status(200).json({
             status: 'success',
             message: 'Login successfully',
-            data : user,
-            token: `Bearer | ${token}`
+            data: user,
+            token: `Bearer ${token}`
         });
 
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             status: 'failed',
             message: "Bad request",
             serverMessage: error.message

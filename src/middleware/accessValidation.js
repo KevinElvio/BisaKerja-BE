@@ -11,6 +11,7 @@ const accessValidation = (req, res, next) => {
 
     const parts = authorization.split(' ');
     if (parts[0] !== 'Bearer' || parts.length !== 2) {
+
         return res.status(401).json({
             message: 'Format token salah'
         });
@@ -23,7 +24,7 @@ const accessValidation = (req, res, next) => {
         req.userData = decoded;
         next();
     } catch (error) {
-        return res.status(403).json({ message: 'Token tidak valid', error: error.message });
+        return res.status(401).json({ message: 'Token tidak valid', error: error.message });
     }
 };
 module.exports = accessValidation;

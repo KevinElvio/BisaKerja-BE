@@ -24,8 +24,16 @@ const getAllUsers = async (req, res) => {
 }
 
 const getUserById = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
     const { id } = req.params;
     try {
+        if(id != tokenUserId){
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
+
         const user = await UsersModel.getUserById(id)
         if (user === null) {
             res.status(404).json({
