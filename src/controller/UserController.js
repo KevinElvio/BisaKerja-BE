@@ -27,7 +27,7 @@ const getUserById = async (req, res) => {
     const tokenUserId = req.userData.data.id;
     const { id } = req.params;
     try {
-        if(id != tokenUserId){
+        if (id != tokenUserId) {
             return res.status(403).json({
                 status: 'failed',
                 message: 'You do not have permission to access this resource'
@@ -58,10 +58,17 @@ const getUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
     const { id } = req.params;
     const data = req.body;
     const { username, email, password, image } = data;
     try {
+        if (id != tokenUserId) {
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
         const user = await UsersModel.getUserById(id);
         if (user === null) {
             res.status(404).json({
@@ -111,8 +118,15 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
     const { id } = req.params;
     try {
+        if(id != tokenUserId){
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
         const user = await UsersModel.getUserById(id);
         if (user === null) {
             res.status(404).json({
