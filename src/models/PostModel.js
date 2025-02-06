@@ -20,8 +20,19 @@ async function readUserPostById(id) {
         
 }
 
+async function readPostById(id, idPost) {
+    return await prisma.post.findUnique({
+        where: {
+            id: parseInt (idPost),
+            authorId: parseInt(id)
+        }
+    });
+
+}
+
 module.exports = {
     createPost,
     readPost,
-    readUserPostById
+    readUserPostById,
+    readPostById
 }
