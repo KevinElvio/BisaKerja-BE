@@ -1,6 +1,6 @@
 const PostModel = require('../models/PostModel');
 
-const createPost = async (req, res) => {
+const CreatePost = async (req, res) => {
     const tokenUserId = req.userData.data.id;
     const { id } = req.params;
     const { image, caption } = req.body;
@@ -17,15 +17,7 @@ const createPost = async (req, res) => {
             authorId: parseInt(id)
         }
         console.log(data);
-        const post = await PostModel.createPost(
-            {
-                data: {
-                    image,
-                    caption,
-                    authorId: parseInt(id)
-                }
-            }
-        );
+        const post = await PostModel.createPost(data);
         res.status(201).json({
             status: 'success',
             message: 'Post created successfully',
@@ -41,5 +33,5 @@ const createPost = async (req, res) => {
 }
 
 module.exports = {
-    createPost
+    CreatePost
 }
