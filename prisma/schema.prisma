@@ -23,7 +23,6 @@ model User {
 
 model Post {
   id           Int      @id @default(autoincrement())
-  title        String
   image        String
   caption      String
   likeCount    Int      @default(0)
