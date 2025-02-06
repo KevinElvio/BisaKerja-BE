@@ -11,7 +11,17 @@ async function readPost() {
     return await prisma.post.findMany();
 }
 
+async function readUserPostById(id) {
+    return await prisma.post.findMany({
+        where: {
+            authorId: parseInt(id)
+        }
+    });
+        
+}
+
 module.exports = {
     createPost,
-    readPost
+    readPost,
+    readUserPostById
 }

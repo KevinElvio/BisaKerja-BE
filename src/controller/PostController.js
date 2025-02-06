@@ -16,7 +16,6 @@ const CreatePost = async (req, res) => {
             caption,
             authorId: parseInt(id)
         }
-        console.log(data);
         const post = await PostModel.createPost(data);
         res.status(201).json({
             status: 'success',
@@ -49,7 +48,39 @@ const ReadPost = async (req, res) => {
     }
 }
 
+const readUserPostById = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
+    const { id } = req.params;
+    try {
+        if (id != tokenUserId) {
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
+        const post = await PostModel.readUserPostById(id);
+        if (!post) {
+            return res.status(404).json({
+                status: 'failed',
+                message: 'Post not found'
+            });
+        }
+        res.status(200).json({
+            status: 'success',
+            message: 'Post retrieved successfully',
+            data: post
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
 module.exports = {
     CreatePost,
-    ReadPost
+    ReadPost,
+    readUserPostById
 }
