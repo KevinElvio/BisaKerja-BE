@@ -32,6 +32,24 @@ const CreatePost = async (req, res) => {
     }
 }
 
+const ReadPost = async (req, res) => {
+    try {
+        const posts = await PostModel.readPost();
+        res.status(200).json({
+            status: 'success',
+            message: 'Posts retrieved successfully',
+            data: posts
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
 module.exports = {
-    CreatePost
+    CreatePost,
+    ReadPost
 }

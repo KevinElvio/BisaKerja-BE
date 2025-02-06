@@ -7,6 +7,11 @@ async function createPost(data) {
     });
 }
 
+async function readPost() {
+    return await prisma.post.findMany();
+}
+
 module.exports = {
-    createPost
+    createPost,
+    readPost
 }
