@@ -40,11 +40,21 @@ async function updatePostById(id, idPost, data){
     })
 }
 
+async function deletePostById(id, idPost) {
+    return await prisma.post.delete({
+        where: {
+            id: parseInt(idPost),
+            authorId: parseInt(id)
+        }
+    })
+}
+
 
 module.exports = {
     createPost,
     readPost,
     readUserPostById,
     readPostById,
-    updatePostById
+    updatePostById,
+    deletePostById
 }

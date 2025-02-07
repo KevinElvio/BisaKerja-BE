@@ -148,27 +148,80 @@ const updatePostById = async (req, res) => {
     const { id, idPost } = req.params;
     const data = req.body;
     try {
+        const post = await PostModel.readPostById(id, idPost);
         if (id != tokenUserId) {
             return res.status(403).json({
                 status: 'failed',
                 message: 'You do not have permission to access this resource'
             });
         }
-        // const post = await PostModel.readPostById(id, idPost);
-        // if (post === null) {
-        //     return res.status(404).json({
-        //         status: 'failed',
-        //         message: 'Post not found',
-        //     })
-        // }
-        // else if (post == post.) {
+        if(data.image == null || data.caption == null){
+            return res.status(406).json({
+                status: 'failed',
+                message: 'Bad request',
+                serverMessage: 'Not acceptable'
+            });
 
-        // }
-        const Updatepost = await PostModel.updatePostById(id, idPost, data)
+        }
+        if(data.image == post.image){
+            return res.status(406).json({
+                status: 'failed',
+                message: 'Bad request',
+                serverMessage: 'Not acceptable'
+            });
+        }
+        if(data.caption == post.caption){
+            return res.status(406).json({
+                status: 'failed',
+                message: 'Bad request',
+                serverMessage: 'Not acceptable'
+            });
+        }
+        const Updatepost = await PostModel.updatePostById(id, idPost, data);
         res.status(200).json({
             status: 'success',
             message: 'Post updated successfully',
-            data: Updatepost
+            data: {
+                id: Updatepost.id,
+                image: Updatepost.image.split(","),
+                caption: Updatepost.caption,
+                likeCount: Updatepost.likeCount,
+                commentCount: Updatepost.commentCount,
+                createAt: Updatepost.createAt,
+                updatedAt: Updatepost.updatedAt,
+                authorId: Updatepost.authorId
+            }
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
+const deletePostById = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
+    const { id, idPost } = req.params;
+    try {
+        const post = await PostModel.readPostById(id, idPost);
+        if (id != tokenUserId) {
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
+        if (!post) {
+            return res.status(404).json({
+                status: 'failed',
+                message: 'Post not found'
+            });
+        }
+        await PostModel.deletePostById(id, idPost);
+        res.status(200).json({
+            status: 'success',
+            message: 'Post deleted successfully',
         });
     } catch (error) {
         res.status(400).json({
@@ -184,5 +237,6 @@ module.exports = {
     ReadPost,
     readUserPostById,
     readPostById,
-    updatePostById
+    updatePostById,
+    deletePostById
 }
