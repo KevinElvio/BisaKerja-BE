@@ -75,6 +75,12 @@ const readUserPostById = async (req, res) => {
                 message: 'Post not found'
             });
         }
+        if(post.length === 0){
+            return res.status(404).json({
+                status: 'failed',
+                message: 'Post not found'
+            });
+        }
         res.status(200).json({
             status: 'success',
             message: 'Post retrieved successfully',
@@ -102,7 +108,6 @@ const readUserPostById = async (req, res) => {
 const readPostById = async (req, res) => {
     const tokenUserId = req.userData.data.id;
     const { id, idPost } = req.params;
-    const data = req.body;
     try {
         if (id != tokenUserId) {
             return res.status(403).json({
@@ -155,7 +160,7 @@ const updatePostById = async (req, res) => {
                 message: 'You do not have permission to access this resource'
             });
         }
-        if(data.image == null || data.caption == null){
+        if (data.image == null || data.caption == null) {
             return res.status(406).json({
                 status: 'failed',
                 message: 'Bad request',
@@ -163,14 +168,14 @@ const updatePostById = async (req, res) => {
             });
 
         }
-        if(data.image == post.image){
+        if (data.image == post.image) {
             return res.status(406).json({
                 status: 'failed',
                 message: 'Bad request',
                 serverMessage: 'Not acceptable'
             });
         }
-        if(data.caption == post.caption){
+        if (data.caption == post.caption) {
             return res.status(406).json({
                 status: 'failed',
                 message: 'Bad request',
