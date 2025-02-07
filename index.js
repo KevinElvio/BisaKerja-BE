@@ -3,6 +3,7 @@ const express = require('express')
 const UserRoutes = require('./src/routes/UserRoutes')
 const AuthRoutes = require('./src/routes/AuthRoutes')
 const PostRoutes = require('./src/routes/PostRoutes')
+const CommentRoutes = require('./src/routes/CommentRoutes')
 const app = express()
 const PORT = process.env.PORT || 5000
 const cors = require("cors");
@@ -13,7 +14,7 @@ app.use(cors());
 app.use('/user', UserRoutes)
 app.use('/auth', AuthRoutes)
 app.use('/post', PostRoutes)
-// app.use('/comment', CommentRoutes)
+app.use('/comment', CommentRoutes)
 // app.use('/job', JobRoutes)
 
 

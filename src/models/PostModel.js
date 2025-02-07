@@ -49,6 +49,20 @@ async function deletePostById(id, idPost) {
     })
 }
 
+async function incrementCommentCount(postId) {
+    return await prisma.post.update({
+        where: {
+            id: postId
+        },
+        data: {
+            commentCount: {
+                increment: 1
+            }
+        }
+    });
+}
+
+
 
 module.exports = {
     createPost,
@@ -56,5 +70,6 @@ module.exports = {
     readUserPostById,
     readPostById,
     updatePostById,
-    deletePostById
+    deletePostById,
+    incrementCommentCount
 }
