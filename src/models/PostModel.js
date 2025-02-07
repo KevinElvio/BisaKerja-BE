@@ -30,9 +30,21 @@ async function readPostById(id, idPost) {
 
 }
 
+async function updatePostById(id, idPost, data){
+    return await prisma.post.update({
+        where:{
+            id: parseInt (idPost),
+            authorId: parseInt(id)
+        },
+        data
+    })
+}
+
+
 module.exports = {
     createPost,
     readPost,
     readUserPostById,
-    readPostById
+    readPostById,
+    updatePostById
 }

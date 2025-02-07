@@ -7,5 +7,6 @@ router.get('/', PostController.ReadPost);
 router.get('/user/:id', accessValidation, PostController.readUserPostById);
 router.get('/:idPost/user/:id', accessValidation, PostController.readPostById);
 router.post('/user/:id', accessValidation, PostController.CreatePost);
+router.put('/:idPost/user/:id', accessValidation, PostController.updatePostById);
 
 module.exports = router;

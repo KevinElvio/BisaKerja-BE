@@ -51,6 +51,7 @@ model Job {
   company     String
   location    String
   description String
+  requirement String
   type        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
