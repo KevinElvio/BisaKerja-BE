@@ -159,10 +159,37 @@ const updateComment = async (req, res) => {
     }
 }
 
+const deleteComment = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
+    const { id, idPost } = req.params;
+    try {
+        if (!tokenUserId) {
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
+        
+        await commentModel.deleteComment(id, idPost);
+        res.status(200).json({
+            status: 'success',
+            message: 'Comment delete successfully'
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
 module.exports = {
     createComment,
     readAllComment,
     readComment,
     readCommentSpec,
-    updateComment
+    updateComment,
+    deleteComment
 }

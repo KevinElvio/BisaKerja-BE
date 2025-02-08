@@ -38,10 +38,20 @@ async function updateComment(id, idPost, data){
     })
 }
 
+async function deleteComment(id, idPost){
+    return await prisma.comment.delete({
+        where : {
+            id : parseInt(id),
+            postId : parseInt(idPost) 
+        }
+    })
+}
+
 module.exports = {
     createComment,
     readAllComment,
     readComment,
     readCommentSpec,
-    updateComment
+    updateComment,
+    deleteComment
 }

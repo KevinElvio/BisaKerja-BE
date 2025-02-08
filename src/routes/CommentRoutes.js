@@ -8,5 +8,6 @@ router.get("/", CommentController.readAllComment);
 router.get("/post/:id", CommentController.readComment);
 router.get("/:id/post/:idPost", CommentController.readCommentSpec);
 router.put("/:id/post/:idPost", accessValidation, CommentController.updateComment);
+router.delete("/:id/post/:idPost", accessValidation, CommentController.deleteComment);
 
 module.exports = router;
