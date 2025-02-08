@@ -28,9 +28,20 @@ async function readCommentSpec(id, idPost){
     })
 }
 
+async function updateComment(id, idPost, data){
+    return await prisma.comment.update({
+        where : {
+            id : parseInt(id),
+            postId : parseInt(idPost) 
+        },
+        data
+    })
+}
+
 module.exports = {
     createComment,
     readAllComment,
     readComment,
-    readCommentSpec
+    readCommentSpec,
+    updateComment
 }

@@ -121,9 +121,48 @@ const readCommentSpec = async (req, res) => {
     }
 }
 
+const updateComment = async (req, res) => {
+    const tokenUserId = req.userData.data.id;
+    const { id, idPost } = req.params;
+    const {comment} = req.body;
+    try {
+        const data = {
+            comment
+        };
+        if (!tokenUserId) {
+            return res.status(403).json({
+                status: 'failed',
+                message: 'You do not have permission to access this resource'
+            });
+        }
+        if (data.length == 0) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'Data not found'
+            })
+        }
+        
+        
+        const newComment = await commentModel.updateComment(id, idPost, data);
+        res.status(200).json({
+            status: 'success',
+            message: 'Comment update successfully',
+            data: newComment
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
 module.exports = {
     createComment,
     readAllComment,
     readComment,
-    readCommentSpec
+    readCommentSpec,
+    updateComment
 }
