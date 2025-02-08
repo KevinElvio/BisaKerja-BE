@@ -19,8 +19,18 @@ async function readComment(id) {
     })
 }
 
+async function readCommentSpec(id, idPost){
+    return await prisma.comment.findUnique({
+        where : {
+            id : parseInt(id),
+            postId : parseInt(idPost)
+        }
+    })
+}
+
 module.exports = {
     createComment,
     readAllComment,
-    readComment
+    readComment,
+    readCommentSpec
 }

@@ -51,6 +51,12 @@ const createComment = async (req, res) => {
 const readAllComment = async (req, res) => {
     try {
         const data = await commentModel.readAllComment()
+        if (data.length == 0) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'Data not found'
+            })
+        }
         res.status(200).json({
             status: 'success',
             message: 'Comment read successfully',
@@ -66,9 +72,40 @@ const readAllComment = async (req, res) => {
 }
 
 const readComment = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     try {
         const data = await commentModel.readComment(id);
+        if (data.length == 0) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'Data not found'
+            })
+        }
+        res.status(200).json({
+            status: 'success',
+            message: 'Comment read successfully',
+            data: data
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
+const readCommentSpec = async (req, res) => {
+    const { id, idPost } = req.params;
+    try {
+        const data = await commentModel.readCommentSpec(id, idPost);
+        if (data.length == 0) {
+            res.status(404).json({
+                status: 'failed',
+                message: 'Data not found'
+            })
+        }
         res.status(200).json({
             status: 'success',
             message: 'Comment read successfully',
@@ -87,5 +124,6 @@ const readComment = async (req, res) => {
 module.exports = {
     createComment,
     readAllComment,
-    readComment
+    readComment,
+    readCommentSpec
 }
