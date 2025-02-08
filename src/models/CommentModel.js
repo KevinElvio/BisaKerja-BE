@@ -7,6 +7,20 @@ async function createComment(data) {
     });
 }
 
+async function readAllComment(){
+    return await prisma.comment.findMany()
+}
+
+async function readComment(id) {
+    return await prisma.comment.findMany({
+        where : {
+            postId : parseInt(id)
+        }
+    })
+}
+
 module.exports = {
-    createComment
+    createComment,
+    readAllComment,
+    readComment
 }

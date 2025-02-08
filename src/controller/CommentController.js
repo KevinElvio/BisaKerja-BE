@@ -1,5 +1,5 @@
-const commentModel = require('../models/CommentModel');
 const { connect } = require('../routes/CommentRoutes');
+const commentModel = require('../models/CommentModel');
 const PostModel = require('../models/PostModel')
 
 const createComment = async (req, res) => {
@@ -19,11 +19,11 @@ const createComment = async (req, res) => {
             authorId: tokenUserId,
             postId: parseInt(id)
         };
-        
+
 
         const newComment = await commentModel.createComment(data);
 
-        if(newComment){
+        if (newComment) {
             await PostModel.incrementCommentCount(parseInt(id));
         }
 
@@ -48,6 +48,44 @@ const createComment = async (req, res) => {
     }
 }
 
+const readAllComment = async (req, res) => {
+    try {
+        const data = await commentModel.readAllComment()
+        res.status(200).json({
+            status: 'success',
+            message: 'Comment read successfully',
+            data: data
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
+const readComment = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const data = await commentModel.readComment(id);
+        res.status(200).json({
+            status: 'success',
+            message: 'Comment read successfully',
+            data: data
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'Bad request',
+            serverMessage: error.message
+        });
+    }
+}
+
 module.exports = {
-    createComment
+    createComment,
+    readAllComment,
+    readComment
 }
