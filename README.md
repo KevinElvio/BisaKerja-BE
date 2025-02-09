@@ -1,25 +1,26 @@
-# ✨ BisaKerja-BE ✨
+# ✨ BisaKerja ✨
 
-BisaKerja-BE adalah backend untuk aplikasi **BisaKerja**, platform pencarian kerja khusus untuk **orang dengan disabilitas**. Aplikasi ini dikembangkan menggunakan **Express.js**, **Prisma ORM**, dan **MySQL** sebagai database. Proyek ini bertujuan untuk memfasilitasi akses pekerjaan bagi penyandang disabilitas dengan fitur manajemen pekerjaan, autentikasi pengguna 🔐, dan komentar 💬.
+BisaKerja-BE is the backend for the BisaKerja application, a job search platform specifically designed for people with disabilities. This application is developed using Express.js, Prisma ORM, and MySQL as the database. The project aims to facilitate job access for people with disabilities, with features such as job management, user authentication 🔐, and comments 💬.
 
-## 🎯 Fitur Utama
-- 🔑 **User Authentication**: Registrasi dan login dengan token JWT.
-- 📋 **Manajemen Pekerjaan**: CRUD (Create, Read, Update, Delete) untuk job posts.
-- 💬 **Fitur Komentar**: Pengguna dapat menambahkan komentar pada job posts.
+## 🎯 Main Features
+- 🔑 User Authentication: Registration and login using JWT tokens.
+- 📋 Job Management: CRUD (Create, Read, Update, Delete) for job posts.
+- 💬 Comment Feature: Users can add comments to job posts.
+- 🌟 Disability-Friendly Job Search: Displays jobs that are disability-friendly.
 
-## 🛠️ Teknologi yang Digunakan
-- ⚡ **Node.js** + **Express.js** - Backend server
-- 🛢️ **Prisma ORM** - Database ORM untuk MySQL
-- 🗄️ **MySQL** - Database
-- 🔒 **JWT** - JSON Web Token untuk autentikasi
-- 🔑 **bcrypt** - Untuk hashing password
+## 🛠️ Technologies Used
+- ⚡ Node.js + Express.js - Backend server
+- 🛢️ Prisma ORM - Database ORM for MySQL
+- 🗄️ MySQL - Database
+- 🔒 JWT - JSON Web Token for authentication
+- 🔑 bcrypt - For password hashing
 
-## 🚀 Instalasi dan Penggunaan
-1. **Clone repository ini**:
+## 🚀 Installation and Usage
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/KevinElvio/BisaKerja-BE.git
    ```
-2. **Masuk ke direktori project**:
+2. **Navigate to the project directory**:
    ```bash
    cd BisaKerja-BE
    ```
@@ -27,19 +28,19 @@ BisaKerja-BE adalah backend untuk aplikasi **BisaKerja**, platform pencarian ker
    ```bash
    npm install
    ```
-4. **Buat file `.env` dan tambahkan variabel lingkungan berikut**:
+4. **Create a .env file and add the following environment variables**:
    ```env
    DATABASE_URL="mysql://username:password@localhost:3306/database_name"
    JWT_SECRET="your_jwt_secret"
    PORT=3000
    ```
-5. **Jalankan migrasi Prisma untuk membuat tabel di database**:
+5. **Run Prisma migration to create tables in the database**:
    ```bash
    npx prisma migrate dev
    ```
-6. **Jalankan server**:
+6. **Start the server**:
    ```bash
    npm start
    ```
-   Server akan berjalan di `http://localhost:3000` 🚀
+   The server will be running at `http://localhost:4000` 🚀
 
