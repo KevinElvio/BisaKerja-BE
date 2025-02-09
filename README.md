@@ -1,6 +1,6 @@
 # ✨ BisaKerja-BE ✨
 
-BisaKerja-BE adalah backend untuk aplikasi **BisaKerja** yang dikembangkan menggunakan **Express.js**, **Prisma ORM**, dan **MySQL** sebagai database. Proyek ini berfokus pada manajemen pekerjaan, autentikasi pengguna 🔐, dan fitur komentar 💬.
+BisaKerja-BE adalah backend untuk aplikasi **BisaKerja**, platform pencarian kerja khusus untuk **orang dengan disabilitas**. Aplikasi ini dikembangkan menggunakan **Express.js**, **Prisma ORM**, dan **MySQL** sebagai database. Proyek ini bertujuan untuk memfasilitasi akses pekerjaan bagi penyandang disabilitas dengan fitur manajemen pekerjaan, autentikasi pengguna 🔐, dan komentar 💬.
 
 ## 🎯 Fitur Utama
 - 🔑 **User Authentication**: Registrasi dan login dengan token JWT.
